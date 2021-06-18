@@ -205,25 +205,31 @@ void Update()
             ballMovement.y *= -1.0f;
             ballPosition.y += ballMovement.y * 0.2f;
         }
-        if (ballPosition.x < 0.0f)
+        //attempted to use bounding box collision
+        if (ballPosition.x >= 0.0f)
         {
-            float xdist = fabs(ballPosition.x - player2Position.x) - ((playerWidth+ ballWidth)/2)-.5f;
-            float ydist = fabs(ballPosition.y - player2Position.y) - ((playerHeight + ballHeight)/2)-.5f;
-            if (xdist < 0 && ydist < 0) 
+            if (ballPosition.x < player2Position.x + playerWidth &&
+                ballPosition.x + ballWidth > player2Position.x &&
+                ballPosition.y < player2Position.y + playerHeight &&
+                ballPosition.y + ballHeight > player2Position.y)
             {
                 ballMovement.x *= -1.0f;
-                ballPosition.x += 0.1f;
+                ballPosition.x += 0.2f;
             }
+
+
         }
         else
         {
-            float xdist = fabs(ballPosition.x - playerPosition.x) - ((playerWidth + ballWidth) / 2) - 1.5f;
-            float ydist = fabs(ballPosition.y - playerPosition.y) - ((playerHeight + ballHeight) / 2) - 1.75f;
-            if (xdist < 0 && ydist < 0)
+            if (ballPosition.x < playerPosition.x + playerWidth &&
+                ballPosition.x + ballWidth > playerPosition.x &&
+                ballPosition.y < playerPosition.y + playerHeight &&
+                ballPosition.y + ballHeight > playerPosition.y)
             {
                 ballMovement.x *= -1.0f;
-                ballPosition.x += 0.1f;
+                ballPosition.x += 0.2f;
             }
+
         }
     }
 }
