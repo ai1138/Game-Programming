@@ -68,7 +68,7 @@ void Initialize()
     program.SetProjectionMatrix(projectionMatrix);
     program.SetViewMatrix(viewMatrix);
    /// program.SetColor(1.0f, 0.0f, 0.0f, 1.0f);
-    playerTextureID = LoadTexture("player.png");
+    playerTextureID = LoadTexture("playerShipBlue.png");
     shipTextureID = LoadTexture("playerShip1_green.png");
 
     glUseProgram(program.programID);
@@ -128,16 +128,15 @@ void Update()
     
     
 }
-
-void Render() 
+void Render()
 {
     float vertices[] = { -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5 };
     float texCoords[] = { 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    
-    
+
+
 
     glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices);
     glEnableVertexAttribArray(program.positionAttribute);
@@ -148,13 +147,13 @@ void Render()
     program.SetModelMatrix(modelMatrix);
     glBindTexture(GL_TEXTURE_2D, playerTextureID);
     glDrawArrays(GL_TRIANGLES, 0, 6);
-    
+
     program.SetModelMatrix(shipMatrix);
     glBindTexture(GL_TEXTURE_2D, shipTextureID);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
 
-   
+
 
     glDisableVertexAttribArray(program.positionAttribute);
     glDisableVertexAttribArray(program.texCoordAttribute);
