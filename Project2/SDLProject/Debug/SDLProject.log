@@ -1,4 +1,2 @@
 ﻿  main.cpp
-C:\Users\aisla\Videos\CS3113\Project2\SDLProject\main.cpp(200,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\aisla\Videos\CS3113\Project2\SDLProject\main.cpp(201,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   SDLProject.vcxproj -> C:\Users\aisla\Videos\CS3113\Project2\SDLProject\Debug\SDLProject.exe

@@ -22,10 +22,16 @@ glm::vec3 playerPosition = glm::vec3(0, 0, 0);
 glm::vec3 player2Position = glm::vec3(0, 0, 0);
 glm::vec3 playerMovement = glm::vec3(0, 0, 0);
 glm::vec3 player2Movement = glm::vec3(0, 0, 0);
+glm::vec3 playerScale = glm::vec3(1.25f, 1.0f, 0.0f);
 glm::vec3 ballPosition = glm::vec3(0.0f, 0.0f, 0.0f);     
 glm::vec3 ballMovement = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 ballScale = glm::vec3(0.5f, 0.5f, 0.0f);
+float playerWidth = playerScale.x;
+float playerHeight = playerScale.y;
+float ballWidth = ballScale.x;
+float ballHeight = ballScale.y;
 float playerSpeed = 1.0f;
-float ballSpeed = 0.75f;
+float ballSpeed = 1.75f;
 GLuint playerTextureID;
 GLuint player2TextureID;
 GLuint ballID;
@@ -179,27 +185,41 @@ void Update()
     playerPosition += playerMovement * playerSpeed * deltaTime;
     player2Position += player2Movement * playerSpeed * deltaTime;
     ballPosition += ballMovement * ballSpeed * deltaTime;
+    
+    modelMatrix = glm::scale(modelMatrix, playerScale);
+    player2Matrix = glm::scale(player2Matrix, playerScale);
+    ballMatrix = glm::scale(ballMatrix, ballScale);
 
     modelMatrix = glm::translate(modelMatrix, playerPosition);
     player2Matrix = glm::translate(player2Matrix, player2Position);
     ballMatrix = glm::translate(ballMatrix, ballPosition);
 
-    if ((ballPosition.x > 5.0f || ballPosition.x < -5.0f))
+    if ((ballPosition.x > 10.0f || ballPosition.x < -10.0f))
     {
         ballSpeed = 0.0f;
     }
     else
     {
-        if (ballPosition.y > 3|| ballPosition.y < -3)
+        if (ballPosition.y > 7|| ballPosition.y < -7)
         {
-            ballMovement.y *= -.75f;
+            ballMovement.y *= -1.0f;
             ballPosition.y += ballMovement.y * 0.2f;
         }
         if (ballPosition.x < 0.0f)
         {
-            float xdist = fabs(ballPosition.x - player2Position.x)-.5-.5;
-            float ydist = fabs(ballPosition.y - player2Position.y)-.5-.75;
+            float xdist = fabs(ballPosition.x - player2Position.x) - ((playerWidth+ ballWidth)/2)-.5f;
+            float ydist = fabs(ballPosition.y - player2Position.y) - ((playerHeight + ballHeight)/2)-.5f;
             if (xdist < 0 && ydist < 0) 
+            {
+                ballMovement.x *= -1.0f;
+                ballPosition.x += 0.1f;
+            }
+        }
+        else
+        {
+            float xdist = fabs(ballPosition.x - playerPosition.x) - ((playerWidth + ballWidth) / 2) - 1.5f;
+            float ydist = fabs(ballPosition.y - playerPosition.y) - ((playerHeight + ballHeight) / 2) - 1.75f;
+            if (xdist < 0 && ydist < 0)
             {
                 ballMovement.x *= -1.0f;
                 ballPosition.x += 0.1f;
@@ -209,28 +229,6 @@ void Update()
 }
 
 
-
-
-void drawLeft() 
-{
-    program.SetModelMatrix(modelMatrix);
-    glBindTexture(GL_TEXTURE_2D, playerTextureID);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-}
-
-void drawRight() 
-{
-    program.SetModelMatrix(player2Matrix);
-    glBindTexture(GL_TEXTURE_2D, player2TextureID);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-}
-
-void drawBall() 
-{
-    program.SetModelMatrix(ballMatrix);
-    glBindTexture(GL_TEXTURE_2D, ballID);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-}
 
 
 void Render() {
@@ -246,9 +244,17 @@ void Render() {
     glVertexAttribPointer(program.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords);
     glEnableVertexAttribArray(program.texCoordAttribute);
 
-    drawLeft();
-    drawRight();
-    drawBall();
+    program.SetModelMatrix(modelMatrix);
+    glBindTexture(GL_TEXTURE_2D, playerTextureID);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    program.SetModelMatrix(player2Matrix);
+    glBindTexture(GL_TEXTURE_2D, player2TextureID);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    program.SetModelMatrix(ballMatrix);
+    glBindTexture(GL_TEXTURE_2D, ballID);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 
     glDisableVertexAttribArray(program.positionAttribute);
     glDisableVertexAttribArray(program.texCoordAttribute);
