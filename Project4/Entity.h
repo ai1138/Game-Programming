@@ -37,6 +37,7 @@ public:
 
     glm::mat4 modelMatrix;
 
+    int enemKilled;
     int* animRight = NULL;
     int* animLeft = NULL;
     int* animUp = NULL;

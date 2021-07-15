@@ -44,13 +44,19 @@ void Entity::CheckCollisionsY(Entity* objects, int objectCount)
                 velocity.y = 0;
                 collidedBottom = true;
             }
-            if ((type == PLAYER && object->type == ENEMY) && collidedBottom)
+            if ((type == PLAYER && object->type == ENEMY) && collidedTop)
             {
+                enemKilled++;
                 object->isActive = false;
+                isAlive = true;
+                
             }
             else if ((type == PLAYER && object->type == ENEMY) && collidedBottom)
             {
+                enemKilled++;
                 object->isActive = false;
+                isAlive = true;
+                
             }
 
         }
@@ -81,7 +87,11 @@ void Entity::CheckCollisionsX(Entity* objects, int objectCount)
                 velocity.x = 0;
                 collidedLeft = true;
             }
-            if ((type == PLAYER && object->type == ENEMY) && (collidedLeft || collidedRight))
+            if ((type == PLAYER && object->type == ENEMY) && collidedLeft )
+            {
+                isAlive = false;
+            }
+            else if ((type == PLAYER && object->type == ENEMY) && collidedRight)
             {
                 isAlive = false;
             }
@@ -196,7 +206,7 @@ void Entity::AiWaitAndGo(Entity* player)
     {
         case IDLE:
                 
-            if (glm::distance(position, player->position) < 3.0f)
+            if (glm::distance(position, player->position) < 0.3f)
             {
                 aiState = WALKING; 
             }

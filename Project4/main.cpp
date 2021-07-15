@@ -296,10 +296,28 @@ void ProcessInput() {
         if (keys[SDL_SCANCODE_LEFT]) {
 
             state.player->movement.x = -1.0f;
+            if (state.player->isAlive == false)
+            {
+                state.player->movement.x = 0.0f;
+            }
+            if (state.player->isAlive == true && state.player->enemKilled == 3)
+            {
+                state.player->movement.x = 0.0f;
+            }
 
         }
-        else if (keys[SDL_SCANCODE_RIGHT]) {
-            state.player->movement.x = 1.0f;;
+        else if (keys[SDL_SCANCODE_RIGHT]) 
+        {
+            state.player->movement.x = 1.0f;
+            if (state.player->isAlive == false)
+            {
+                state.player->movement.x = 0.0f;
+            }
+            if (state.player->isAlive == true && state.player->enemKilled == 3)
+            {
+                state.player->movement.x = 0.0f;
+            }
+
         }
 
 
@@ -340,7 +358,8 @@ void Update() {
 }
 
 
-void Render() {
+void Render() 
+{
     glClear(GL_COLOR_BUFFER_BIT);
 
     for (int i = 0; i < platCount; i++)
@@ -352,18 +371,21 @@ void Render() {
         state.enemy[i].Render(&program);
     }
     state.player->Render(&program);
-    SDL_GL_SwapWindow(displayWindow);
+   
+    
 
-    /*if (state.player->isAlive == false) 
+    
+    if (state.player->isAlive == false) 
     {
         DrawText(&program, "You Lose!", 0.5f, -0.25f, glm::vec3(-1.20f, -0.25f, 0));
         
     }
-    else if (state.player->isAlive == true && enemKilled == 3) 
+    else if (state.player->isAlive == true && state.player->enemKilled == 3)
     {
-        DrawText(&program,  "You Win!", 0.5f, -0.25f, glm::vec3(-1.18f, -0.25f, 0));
+        DrawText(&program, "You Win!", 0.5f, -0.25f, glm::vec3(-1.18f, -0.25f, 0));
         
-    }*/
+    }
+    SDL_GL_SwapWindow(displayWindow);
 }
 
 
