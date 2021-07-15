@@ -179,20 +179,20 @@ void Initialize() {
     state.enemy[0].type = ENEMY;
     state.enemy[0].acceleration = glm::vec3(0, -0.9f, 0);
     state.enemy[0].aiType = WALKER;
-    
+    state.enemy[0].aiState = IDLE;
 
     state.enemy[1].textureID = LoadTexture("enem.png");
     state.enemy[1].position = glm::vec3(-2, 2.5f, 0);
     state.enemy[1].type = ENEMY;
     state.enemy[1].acceleration = glm::vec3(0, -0.9f, 0);
-    state.enemy[1].aiType = WAITANDGO;
+    state.enemy[1].aiType = WALKER;
     state.enemy[1].aiState = IDLE;
 
     state.enemy[2].textureID = LoadTexture("enem.png");
     state.enemy[2].position = glm::vec3(-4, -1.5f, 0);
     state.enemy[2].type = ENEMY;
     state.enemy[2].acceleration = glm::vec3(0, -0.9f, 0);
-    state.enemy[2].aiType = WAITANDGO;
+    state.enemy[2].aiType = WALKER;
     state.enemy[2].aiState = IDLE;
 
     
