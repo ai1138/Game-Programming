@@ -198,6 +198,8 @@ void Entity::Ai(Entity* player)
 
 void Entity::AiWalker()
 {
+    movement = glm::vec3(-1.0f, 0.0f, 0.0f);
+
 }
 
 void Entity::AiWaitAndGo(Entity* player)
@@ -205,14 +207,18 @@ void Entity::AiWaitAndGo(Entity* player)
     switch (aiState)
     {
         case IDLE:
-                
             if (glm::distance(position, player->position) < 0.3f)
             {
                 aiState = WALKING; 
             }
             break;
         case WALKING:
-            movement = glm::vec3(-1, 0, 0);
+            if (player->position.x < position.x) {
+                movement = glm::vec3(-1.0f, 0.0f, 0.0f);
+            }
+            else {
+                movement = glm::vec3(1.0f, 0.0f, 0.0f);
+            }
             break;
         case ATTACKING:
             break;

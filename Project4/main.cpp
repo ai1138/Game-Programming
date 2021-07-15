@@ -6,6 +6,7 @@
 
 #define GL_GLEXT_PROTOTYPES 1
 #include <SDL.h>
+#include <SDL_mixer.h>
 #include <SDL_opengl.h>
 #include "glm/mat4x4.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -34,6 +35,7 @@ ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
 
 int enemKilled = 0;
+Mix_Music* music;
 
 GLuint LoadTexture(const char* filePath) {
     int w, h, n;
@@ -128,6 +130,12 @@ void Initialize() {
     glewInit();
 #endif
 
+
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+    music = Mix_LoadMUS("Light.wav");
+    Mix_PlayMusic(music, -1);   // -1 = loop forever
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
+
     glViewport(0, 0, 640, 480);
 
     program.Load("shaders/vertex_textured.glsl", "shaders/fragment_textured.glsl");
@@ -170,8 +178,8 @@ void Initialize() {
     state.enemy[0].position = glm::vec3(3, 1.5f, 0);
     state.enemy[0].type = ENEMY;
     state.enemy[0].acceleration = glm::vec3(0, -0.9f, 0);
-    state.enemy[0].aiType = WAITANDGO;
-    state.enemy[0].aiState = IDLE;
+    state.enemy[0].aiType = WALKER;
+    
 
     state.enemy[1].textureID = LoadTexture("enem.png");
     state.enemy[1].position = glm::vec3(-2, 2.5f, 0);
