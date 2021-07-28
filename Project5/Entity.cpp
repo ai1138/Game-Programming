@@ -90,11 +90,34 @@ void Entity::CheckCollisionsX(Entity* objects, int objectCount)
             }
             if ((type == PLAYER && object->type == ENEMY) && collidedLeft )
             {
-                isAlive = false;
+                hit = true;
+                if (hit)
+                {
+                    lives--;
+                    hit = false;
+                    object->position.x -= .1;
+                }
             }
             else if ((type == PLAYER && object->type == ENEMY) && collidedRight)
             {
-                isAlive = false;
+                hit = true;
+                if (hit)
+                {
+                    lives--;
+                    hit = false;
+                    object->position.x += .1;
+                    
+                }
+                
+            }
+            if ((type == PLAYER && object->type == GOAL) && collidedLeft)
+            {
+                goalAchieved = true;
+            }
+            else if ((type == PLAYER && object->type == GOAL) && collidedRight)
+            {
+                goalAchieved = true;
+
             }
         }
         
@@ -168,7 +191,7 @@ void Entity::CheckCollisionsY(Map* map)
 }
 
 
-void Entity::Update(float deltaTime = 0, Entity* player = NULL,Map* platform = NULL, Entity* enemy = NULL,int enemyCount=0)
+void Entity::Update(float deltaTime, Entity* player ,Map* platform , Entity* enemy ,int enemyCount)
 {
     if (isActive == false) return;
    
@@ -251,45 +274,55 @@ void Entity::DrawSpriteFromTextureAtlas(ShaderProgram* program, GLuint textureID
 
 void Entity::Ai(Entity* player)
 {
-    switch (aiType)
+    switch (aiType) 
     {
-        case WALKER:
-            AiWalker();
-            break;
-        case WAITANDGO:
-            AiWaitAndGo(player);
-            break;
-       
+    case WALKER:
+        AiWalker();
+        break;
+
+    case WAITANDGO:
+        AiWaitAndGo(player);
+        break;
     }
 }
 
 void Entity::AiWalker()
 {
-    movement = glm::vec3(0.5f, 0.0f, 0.0f);
+    movement = glm::vec3(-1.0f, 0.0f, 0.0f);
 
 }
 
 void Entity::AiWaitAndGo(Entity* player)
 {
-    switch (aiState)
-    {
-        case IDLE:
-            if (glm::distance(position, player->position) < 0.3f)
-            {
-                aiState = WALKING; 
-            }
-            break;
-        case WALKING:
-            if (player->position.x < position.x) {
-                movement = glm::vec3(-1.0f, 0.0f, 0.0f);
-            }
-            else {
-                movement = glm::vec3(1.0f, 0.0f, 0.0f);
-            }
-            break;
-        case ATTACKING:
-            break;
-    
+    switch (aiState) {
+    case IDLE:
+        // if player close enough, switch to walking
+        if (glm::distance(this->position, player->position) < 4.0f) {
+            aiState = WALKING;
+        }
+        else {
+            movement = glm::vec3(0.0f, 0.0f, 0.0f);
+        }
+        break;
+
+    case WALKING:
+        
+        if (glm::distance(position, player->position) >= 4.0f) {
+            aiState = IDLE;
+        }
+
+        
+        else if (player->position.x < position.x) {
+            movement = glm::vec3(-1.0f, 0.0f, 0.0f);
+        }
+        else {
+            movement = glm::vec3(1.0f, 0.0f, 0.0f);
+        }
+
+        break;
+
+    case ATTACKING:
+        break;
     }
 }
 

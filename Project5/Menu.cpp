@@ -1,4 +1,5 @@
 #include "Menu.h"
+
 #define MENU_WIDTH 14
 #define MENU_HEIGHT 8
 
@@ -15,7 +16,7 @@ unsigned int menu_data[] =
 };
 void Menu::Initialize()
 {
-
+    
 	state.nextScene = -1;
 	GLuint mapTextureID = Util::LoadTexture("tileset.png");
 	state.map = new Map(MENU_WIDTH, MENU_HEIGHT, menu_data, mapTextureID, 1.0f, 4, 1);
@@ -71,5 +72,6 @@ void Menu::Render(ShaderProgram* program)
 	state.map->Render(program);
 	GLuint fontID = Util::LoadTexture("font.png");
 	Util::DrawText(program, fontID, "Welcome to The Zone", 0.5f, -0.25f, glm::vec3(3.0, -0.75f, 0));
+    Util::DrawText(program, fontID, "Get the Coin to win the game!", 0.5f, -0.25f, glm::vec3(3.0, -1.5f, 0));
 	Util::DrawText(program, fontID, "Press Enter To Play", 0.5f, -0.25f, glm::vec3(3.0, -3.25f, 0));
 }

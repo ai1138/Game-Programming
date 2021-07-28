@@ -19,6 +19,7 @@ struct GameState {
 	Entity* enemy;
 	int nextScene;
 	bool gameDone = false;
+	Entity* goalPost;
 };
 class Scene {
 public:

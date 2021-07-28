@@ -13,7 +13,7 @@
 #include "ShaderProgram.h"
 #include "Map.h"
 #include "Util.h"
-enum EntityType { PLAYER, ENEMY }; 
+enum EntityType { PLAYER, ENEMY, GOAL }; 
 enum AIType {WALKER,WAITANDGO};
 enum AIState {IDLE, WALKING, ATTACKING};
 class Entity 
@@ -31,7 +31,9 @@ public:
     float height = 1;
     bool jump = false;
     float jumpPower;
-
+    bool hit = false;
+    int lives = 3;
+    bool goalAchieved;
 
     GLuint textureID;
 
