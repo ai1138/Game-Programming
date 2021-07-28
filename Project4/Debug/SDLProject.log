@@ -1,2 +1,3 @@
-﻿  Entity.cpp
+﻿  main.cpp
+C:\Users\aisla\Videos\CS3113\Project4\main.cpp(75,23): warning C4018: '<': signed/unsigned mismatch
   SDLProject.vcxproj -> C:\Users\aisla\Videos\CS3113\Project4\Debug\SDLProject.exe
