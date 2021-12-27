@@ -1,2 +1,0 @@
-C:/Users/aisla/Videos/CS3113/Project1 Abed Islam/SDLProject/glm/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-C:/Users/aisla/Videos/CS3113/Project1 Abed Islam/SDLProject/glm/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
