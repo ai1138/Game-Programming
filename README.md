@@ -1,5 +1,5 @@
 # Game-Programming
-Star Shooter is a 2D top down shooter. In this game you control the character and beat all the enemies to advance to the next level. 
+Coin Chaser is a 2D top down shooter. In this game you control the character and beat all the enemies to advance to the next level. 
 This game was built with c++ and the open source libary sdl
 
 # Instructions To Run SDL Games
